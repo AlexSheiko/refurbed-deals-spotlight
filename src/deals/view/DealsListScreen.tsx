@@ -2,7 +2,6 @@ import { Text } from "@react-navigation/elements";
 import { useNavigation } from "@react-navigation/native";
 import { useMemo, useState } from "react";
 import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
-import { Card } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { Deal } from "../data/model/Deal";
 import { useDeals } from "../logic/useDeals";
@@ -107,14 +106,4 @@ const styles = StyleSheet.create({
   chipActive: { backgroundColor: "#E6F1FB" },
   chipText: { fontSize: 13 },
   chipTextActive: { color: "#185FA5", fontWeight: "500" },
-  badgeRow: { flexDirection: "row", gap: 8, marginTop: 8 },
-  badge: {
-    paddingHorizontal: 9,
-    paddingVertical: 3,
-    borderRadius: 20,
-    backgroundColor: "#F5F5F3",
-    fontSize: 12,
-    fontWeight: "500",
-    overflow: "hidden",
-  },
 });
