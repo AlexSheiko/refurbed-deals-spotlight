@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react-native";
+import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { useDeals } from "../src/deals/logic/useDeals";
 
@@ -23,6 +24,6 @@ export class TestEnvironment {
   deals = mockUseDeals;
 
   openWith(ui: React.ReactElement) {
-    return render(ui);
+    return render(<NavigationContainer>{ui}</NavigationContainer>);
   }
 }
