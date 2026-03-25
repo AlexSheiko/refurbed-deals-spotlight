@@ -9,7 +9,7 @@ type Props = StaticScreenProps<{
 
 export function DealDetailsScreen({ route }: Props) {
   const { deal } = route.params;
-  
+
   return (
     <View style={styles.container}>
       <Text>{deal.title}</Text>
@@ -23,8 +23,13 @@ export function DealDetailsScreen({ route }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     gap: 10,
+    padding: 24,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });

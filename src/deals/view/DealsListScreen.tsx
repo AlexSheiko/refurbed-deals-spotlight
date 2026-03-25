@@ -8,6 +8,8 @@ import {
 import { Text } from "@react-navigation/elements";
 import type { Deal } from "../data/model/Deal";
 import { useDeals } from "../logic/useDeals";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Card } from "react-native-paper";
 
 export const DealsListScreen = () => {
   const state = useDeals();
@@ -25,33 +27,40 @@ export const DealsListScreen = () => {
     <TouchableOpacity
       onPress={() => navigation.navigate("DealDetails", { deal: item })}
     >
-      <View>
-        <Text>{item.title}</Text>
-        <Text>
-          {item.price.amount} {item.price.currency}
-        </Text>
-        <Text>-{item.discountPercentage}%</Text>
-        <Text>Refurbed Score: {item.refurbedScore}/100</Text>
-      </View>
+      <Card>
+        <Card.Content>
+          <Text>{item.title}</Text>
+          <Text>
+            {item.price.amount} {item.price.currency}
+          </Text>
+          <Text>-{item.discountPercentage}%</Text>
+          <Text>Refurbed Score: {item.refurbedScore}/100</Text>
+        </Card.Content>
+      </Card>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={state.deals}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
+        contentContainerStyle={{ padding: 20, gap: 16 }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     gap: 10,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
