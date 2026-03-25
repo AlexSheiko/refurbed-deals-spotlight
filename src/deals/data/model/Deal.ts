@@ -1,6 +1,6 @@
 import z from "zod";
 import { MoneySchema } from "./Money";
-import { randomUUID } from "crypto";
+import * as Crypto from "expo-crypto";
 
 const DealSchema = z.object({
   id: z.uuid(),
@@ -13,7 +13,7 @@ const DealSchema = z.object({
 export type Deal = z.infer<typeof DealSchema>;
 
 export const mockedDeal = (overrides?: Partial<Deal>): Deal => ({
-  id: randomUUID(),
+  id: Crypto.randomUUID(),
   title: "Mocked title",
   price: { amount: 199, currency: "USD" },
   discountPercentage: 0,
