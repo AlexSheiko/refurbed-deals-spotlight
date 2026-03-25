@@ -1,17 +1,22 @@
-import { Button, Text } from "@react-navigation/elements";
-import { StyleSheet, View } from "react-native";
+import { Text } from "@react-navigation/elements";
+import { FlatList, StyleSheet } from "react-native";
+import { useDeals } from "../logic/useDeals";
 
-export function DealsListScreen() {
+export const DealsListScreen = () => {
+  const state = useDeals();
+
+  if (state.status === "initial") return null;
+  if (state.status === "loading") return <Text>Loading...</Text>;
+  if (state.status === "error") return <Text>{state.errorMessage}</Text>;
+
   return (
-    <View style={styles.container}>
-      <Text>Deals Spotlight</Text>
-      <Text>Open up 'src/App.tsx' to start working on your app!</Text>
-      <Button screen="DealDetails" params={{ deal: "testId" }}>
-        Go to deal details
-      </Button>
-    </View>
+    <FlatList
+      data={state.deals}
+      keyExtractor={(deal) => deal.id}
+      renderItem={({ item }) => <Text>{item.title}</Text>}
+    />
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
