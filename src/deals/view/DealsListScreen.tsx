@@ -1,20 +1,49 @@
+import { useNavigation } from "@react-navigation/native";
+import {
+  FlatList,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+} from "react-native";
 import { Text } from "@react-navigation/elements";
-import { FlatList, StyleSheet } from "react-native";
+import type { Deal } from "../data/model/Deal";
 import { useDeals } from "../logic/useDeals";
 
 export const DealsListScreen = () => {
   const state = useDeals();
+  const navigation = useNavigation();
 
-  if (state.status === "initial") return null;
-  if (state.status === "loading") return <Text>Loading...</Text>;
-  if (state.status === "error") return <Text>{state.errorMessage}</Text>;
+  if (state.status === "initial" || state.status === "loading") {
+    return <Text>Loading...</Text>;
+  }
+
+  if (state.status === "error") {
+    return <Text>Error: {state.errorMessage}</Text>;
+  }
+
+  const renderItem = ({ item }: { item: Deal }) => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate("DealDetails", { deal: item })}
+    >
+      <View>
+        <Text>{item.title}</Text>
+        <Text>
+          {item.price.amount} {item.price.currency}
+        </Text>
+        <Text>-{item.discountPercentage}%</Text>
+        <Text>Refurbed Score: {item.refurbedScore}/100</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
-    <FlatList
-      data={state.deals}
-      keyExtractor={(deal) => deal.id}
-      renderItem={({ item }) => <Text>{item.title}</Text>}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={state.deals}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+      />
+    </View>
   );
 };
 
