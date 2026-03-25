@@ -3,18 +3,34 @@ import type { Deal } from "../data/model/Deal";
 import { dealsRepository } from "../data/repository/DealsRepository";
 
 type DealsState =
+  | { status: "initial" }
   | { status: "loading" }
-  | { status: "error"; error: string }
-  | { status: "success"; deals: Deal[] };
+  | { status: "success"; deals: Deal[] }
+  | { status: "error"; errorMessage: string };
 
 export const useDeals = () => {
-  const [state, setState] = useState<DealsState>({ status: "loading" });
+  const [state, setState] = useState<DealsState>({ status: "initial" });
+
+  const onScreenOpened = async () => {
+    setState({ status: "loading" });
+    try {
+      const deals = await dealsRepository.fetchDeals();
+      setState({ status: "success", deals });
+    } catch (e) {
+      setState({
+        status: "error",
+        errorMessage: e instanceof Error ? e.message : "Unknown error",
+      });
+    }
+  };
+
+  const onScreenClosed = () => {
+    setState({ status: "initial" });
+  };
 
   useEffect(() => {
-    dealsRepository
-      .fetchDeals()
-      .then((deals) => setState({ status: "success", deals }))
-      .catch((e) => setState({ status: "error", error: e.message }));
+    onScreenOpened();
+    return () => onScreenClosed();
   }, []);
 
   return state;
