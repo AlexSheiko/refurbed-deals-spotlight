@@ -14,7 +14,7 @@ export type Deal = z.infer<typeof DealSchema>;
 
 export const mockedDeal = (overrides?: Partial<Deal>): Deal => ({
   id: Crypto.randomUUID(),
-  title: "Mocked title",
+  title: "Mocked deal",
   price: { amount: 199, currency: "USD" },
   discountPercentage: 10,
   refurbedScore: 85,

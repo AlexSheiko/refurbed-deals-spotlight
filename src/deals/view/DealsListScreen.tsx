@@ -1,11 +1,11 @@
-import { useNavigation } from "@react-navigation/native";
-import { FlatList, TouchableOpacity, View, StyleSheet } from "react-native";
 import { Text } from "@react-navigation/elements";
+import { useNavigation } from "@react-navigation/native";
+import { useMemo, useState } from "react";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Card } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import type { Deal } from "../data/model/Deal";
 import { useDeals } from "../logic/useDeals";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Card, ToggleButton } from "react-native-paper";
-import { useState, useMemo } from "react";
 
 type SortKey = "price-asc" | "price-desc" | "score-asc" | "score-desc";
 
@@ -51,11 +51,27 @@ export const DealsListScreen = () => {
       <Card>
         <Card.Content>
           <Text>{item.title}</Text>
-          <Text>
-            {item.price.amount} {item.price.currency}
-          </Text>
-          <Text>-{item.discountPercentage}%</Text>
-          <Text>Refurbed Score: {item.refurbedScore}/100</Text>
+          <View style={styles.badgeRow}>
+            <Text style={styles.badge}>
+              {item.price.amount} {item.price.currency}
+            </Text>
+            <Text
+              style={[
+                styles.badge,
+                { backgroundColor: "#EAF3DE", color: "#3B6D11" },
+              ]}
+            >
+              −{item.discountPercentage}%
+            </Text>
+            <Text
+              style={[
+                styles.badge,
+                { backgroundColor: "#E6F1FB", color: "#185FA5" },
+              ]}
+            >
+              Score {item.refurbedScore}/100
+            </Text>
+          </View>
         </Card.Content>
       </Card>
     </TouchableOpacity>
@@ -106,20 +122,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#FFF",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
   },
-  chipActive: {
-    backgroundColor: "#E8F1FD",
-    borderColor: "#4A90D9",
-  },
-  chipText: {
-    fontSize: 13,
-    color: "#555",
-  },
-  chipTextActive: {
-    color: "#1A5FA8",
+  chipActive: { backgroundColor: "#E6F1FB" },
+  chipText: { fontSize: 13 },
+  chipTextActive: { color: "#185FA5", fontWeight: "500" },
+  badgeRow: { flexDirection: "row", gap: 8, marginTop: 8 },
+  badge: {
+    paddingHorizontal: 9,
+    paddingVertical: 3,
+    borderRadius: 20,
+    backgroundColor: "#F5F5F3",
+    fontSize: 12,
     fontWeight: "500",
+    overflow: "hidden",
   },
 });
