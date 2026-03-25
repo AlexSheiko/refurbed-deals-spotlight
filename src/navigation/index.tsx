@@ -3,8 +3,8 @@ import {
   StaticParamList,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { DealDetailsScreen } from "./screens/DealDetailsScreen";
-import { DealsListScreen } from "./screens/DealsListScreen";
+import { DealDetailsScreen } from "../deals/view/DealDetailsScreen";
+import { DealsListScreen } from "../deals/view/DealsListScreen";
 
 const RootStack = createNativeStackNavigator({
   screens: {
