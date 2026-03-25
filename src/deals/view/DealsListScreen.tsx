@@ -6,6 +6,7 @@ import { Card } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { Deal } from "../data/model/Deal";
 import { useDeals } from "../logic/useDeals";
+import { DealCard } from "./components/DealCard";
 
 type SortKey = "price-asc" | "price-desc" | "score-asc" | "score-desc";
 
@@ -45,36 +46,10 @@ export const DealsListScreen = () => {
   }
 
   const renderItem = ({ item }: { item: Deal }) => (
-    <TouchableOpacity
+    <DealCard
+      deal={item}
       onPress={() => navigation.navigate("DealDetails", { deal: item })}
-    >
-      <Card>
-        <Card.Content>
-          <Text>{item.title}</Text>
-          <View style={styles.badgeRow}>
-            <Text style={styles.badge}>
-              {item.price.amount} {item.price.currency}
-            </Text>
-            <Text
-              style={[
-                styles.badge,
-                { backgroundColor: "#EAF3DE", color: "#3B6D11" },
-              ]}
-            >
-              −{item.discountPercentage}%
-            </Text>
-            <Text
-              style={[
-                styles.badge,
-                { backgroundColor: "#E6F1FB", color: "#185FA5" },
-              ]}
-            >
-              Score {item.refurbedScore}/100
-            </Text>
-          </View>
-        </Card.Content>
-      </Card>
-    </TouchableOpacity>
+    />
   );
 
   return (
