@@ -10,7 +10,7 @@ const DealSchema = z.object({
   refurbedScore: z.number().int().min(0).max(100),
 });
 
-type Deal = z.infer<typeof DealSchema>;
+export type Deal = z.infer<typeof DealSchema>;
 
 export const mockedDeal = (overrides?: Partial<Deal>): Deal => ({
   id: randomUUID(),
