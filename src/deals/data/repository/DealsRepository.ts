@@ -8,6 +8,6 @@ export const dealsRepository: DealsRepository = {
   fetchDeals: async () =>
     Promise.resolve([
       mockedDeal(),
-      mockedDeal({ title: "Another deal", discountPercentage: 20 }),
+      mockedDeal({ title: "Another deal", discountPercentage: 20, refurbedScore: 65 }),
     ]),
 };

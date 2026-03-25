@@ -16,7 +16,7 @@ export const mockedDeal = (overrides?: Partial<Deal>): Deal => ({
   id: Crypto.randomUUID(),
   title: "Mocked title",
   price: { amount: 199, currency: "USD" },
-  discountPercentage: 0,
+  discountPercentage: 10,
   refurbedScore: 85,
   ...overrides,
 });
